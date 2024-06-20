@@ -1,5 +1,4 @@
-module github.com/mistadave/shelly-mqtt-to-influx
-
+module github.com/mistadave/smti
 go 1.22.2
 
 require (
