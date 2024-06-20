@@ -6,10 +6,12 @@ import (
 	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
+	"github.com/mistadave/smti/queue"
 )
 
 var messagePubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
 	fmt.Printf("Received message: %s from topic: %s\n", msg.Payload(), msg.Topic())
+	queue.SENSORMQ.Put(queue.Data{ID: msg.Topic(), Value: msg.Payload()})
 }
 
 func startMqttConsumer(mqttBroker string) {
