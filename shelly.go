@@ -12,8 +12,8 @@ var messagePubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Me
 	fmt.Printf("Received message: %s from topic: %s\n", msg.Payload(), msg.Topic())
 }
 
-func startMqttConsumer() {
-	opts := mqtt.NewClientOptions().AddBroker("tcp://192.168.1.110:1883")
+func startMqttConsumer(mqttBroker string) {
+	opts := mqtt.NewClientOptions().AddBroker(mqttBroker)
 	opts.SetClientID("shelly-consumer")
 	opts.SetDefaultPublishHandler(messagePubHandler)
 	opts.SetUsername("")
