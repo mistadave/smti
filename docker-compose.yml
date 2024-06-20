@@ -1,0 +1,25 @@
+networks:
+  dev:
+
+services:
+  smti:
+    image: smti
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    environment:
+      - ENVIRONMENT=development
+      - MQTT_BROKER=tcp://mqtt:1883
+
+  mqtt:
+    image: eclipse-mosquitto:2
+    networks:
+      - dev
+    ports:
+      - "1883:1883"

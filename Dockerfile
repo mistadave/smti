@@ -10,7 +10,7 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o main .
+RUN go build -o smti .
 
 FROM alpine:latest
 
@@ -18,4 +18,4 @@ WORKDIR /app
 
 COPY --from=builder /app/main .
 
-CMD ["./main"]
+CMD ["./smti"]
