@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/mistadave/smti/queue"
@@ -11,7 +10,7 @@ import (
 
 var messagePubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
 	fmt.Printf("Received message: %s from topic: %s\n", msg.Payload(), msg.Topic())
-	queue.SENSORMQ.Put(queue.Data{ID: msg.Topic(), Value: msg.Payload()})
+	queue.SENSORMQ.Channel <- queue.Data{ID: msg.Topic(), Value: msg.Payload()}
 }
 
 func startMqttConsumer(mqttBroker string) {
@@ -37,8 +36,4 @@ func startMqttConsumer(mqttBroker string) {
 		os.Exit(1)
 	}
 
-	for {
-		time.Sleep(1 * time.Second)
-		// Do nothing
-	}
 }

@@ -5,13 +5,10 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"github.com/mistadave/smti/config"
+	"github.com/mistadave/smti/db"
 	"github.com/reMarkable/envconfig/v2"
 )
-
-type Config struct {
-	Environment string `envconfig:"ENVIRONMENT" default:"development"`
-	MqttBroker  string `envconfig:"MQTT_BROKER" default:"tcp://localhost:1883" required:"true"`
-}
 
 func init() {
 	err := godotenv.Load()
@@ -23,13 +20,18 @@ func init() {
 
 func main() {
 	fmt.Println("Starting Shelly mqtt Consumer")
-
-	var config Config
-	if err := envconfig.Process("myapp", &config); err != nil {
+	var config config.Config
+	if err := envconfig.Process("", &config); err != nil {
 		fmt.Println("Error loading config:", err)
 		os.Exit(1)
 	}
+
 	fmt.Println("configs:", config)
 	fmt.Println("environment:", config.Environment)
+	db.Init(config)
 	startMqttConsumer(config.MqttBroker)
+
+	for {
+		select {}
+	}
 }
