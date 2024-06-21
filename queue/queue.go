@@ -2,7 +2,8 @@ package queue
 
 type Data struct {
 	ID    string
-	Value any
+	Tags  map[string]string
+	Value interface{}
 }
 
 var SENSORMQ *MessageQueue
