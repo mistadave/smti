@@ -3,14 +3,35 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
+	"strings"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/mistadave/smti/queue"
 )
 
+func parseTopic(topic string) (string, string) {
+	tokens := strings.Split(topic, "/")
+	if len(tokens) >= 4 {
+		return tokens[1], tokens[3]
+	}
+	return "", ""
+}
+
+type KeyValue struct {
+	Key   string
+	Value float64
+}
+
 var messagePubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
 	fmt.Printf("Received message: %s from topic: %s\n", msg.Payload(), msg.Topic())
-	queue.SENSORMQ.Channel <- queue.Data{ID: msg.Topic(), Value: msg.Payload()}
+	id, key := parseTopic(msg.Topic())
+	value, err := strconv.ParseFloat(string(msg.Payload()), 32)
+	if err != nil {
+		fmt.Println("Error parsing payload:", err)
+		return
+	}
+	queue.SENSORMQ.Channel <- queue.Data{ID: id, Value: KeyValue{key, value}}
 }
 
 func startMqttConsumer(mqttBroker string) {
