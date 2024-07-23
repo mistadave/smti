@@ -30,7 +30,7 @@ func main() {
 	fmt.Println("environment:", config.Environment)
 	db.Init(config)
 	startMqttConsumer(config.MqttBroker)
-
+	db.StartInfluxConsumer()
 	for {
 		select {}
 	}
