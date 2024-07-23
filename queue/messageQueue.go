@@ -6,6 +6,6 @@ type MessageQueue struct {
 
 func NewMessageQueue(size int) *MessageQueue {
 	return &MessageQueue{
-		Channel: make(chan Data),
+		Channel: make(chan Data, 100),
 	}
 }
