@@ -1,6 +1,7 @@
 module github.com/mistadave/smti
 
 go 1.22.2
+toolchain go1.23.7
 
 require (
 	github.com/eclipse/paho.mqtt.golang v1.4.3
@@ -18,6 +19,6 @@ require (
 require (
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/influxdata/influxdb-client-go/v2 v2.13.0
-	golang.org/x/net v0.23.0 // indirect
+	golang.org/x/net v0.36.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 )
