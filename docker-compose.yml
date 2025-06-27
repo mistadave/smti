@@ -11,11 +11,13 @@ services:
       - dev
     ports:
       - "8080:8080"
-    volumes:
-      - .:/app
     environment:
       - ENVIRONMENT=development
-      - MQTT_BROKER=tcp://mqtt:1883
+      - MQTT_BROKER=tcp://192.168.1.110:1883
+      - INFLUX_URL=http://192.168.1.152:8086
+      - INFLUX_TOKEN=your-token-here
+      - INFLUX_ORG=schloss
+      - INFLUX_BUCKET=shelly
 
   mqtt:
     image: eclipse-mosquitto:2

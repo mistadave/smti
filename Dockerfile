@@ -1,4 +1,4 @@
-FROM golang:1.22-alpine AS builder
+FROM golang:1.23-alpine AS builder
 
 LABEL maintainer="David Stäheli <mistrdave@gmail.com>"
 
@@ -10,12 +10,12 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o smti .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o smti .
 
-FROM alpine:latest
+FROM alpine:latest AS runtime
 
 WORKDIR /app
 
-COPY --from=builder /app/main .
+COPY --from=builder /app/smti .
 
 CMD ["./smti"]
