@@ -15,12 +15,9 @@ services:
       - ENVIRONMENT=development
       - MQTT_BROKER=tcp://192.168.1.110:1883
       - INFLUX_URL=http://192.168.1.152:8086
-      - INFLUX_TOKEN=apzBfm8K_Q4UWGo4-iTnzRfZew9m0XyyH5d1snqO2SuXw362Uz7oPXMwWFDrduyXkiQ5Ag8Ifw2gJTP2EM8Gew==
+      - INFLUX_TOKEN=your-token-here
       - INFLUX_ORG=schloss
       - INFLUX_BUCKET=shelly
-    # stdin_open: true
-    # tty: true
-    # command: ["sh"]
 
   mqtt:
     image: eclipse-mosquitto:2
