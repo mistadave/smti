@@ -10,9 +10,9 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o smti .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o smti .
 
-FROM alpine:latest
+FROM alpine:latest AS runtime
 
 WORKDIR /app
 
